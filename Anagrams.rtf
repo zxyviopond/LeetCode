@@ -1,0 +1,49 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 //Anagrams\
+\
+public class Solution \{\
+    public ArrayList<String> anagrams(String[] strs) \{\
+        ArrayList<String> result=new ArrayList<String>();\
+        int[] status=new int[strs.length];\
+        for(int i=0;i<strs.length;i++)\{\
+            if(status[i]==1) continue;\
+            int haveanagrams=0;\
+            for(int t=i+1;t<strs.length;t++)\{\
+                if(isanagrams(strs[t],strs[i]))\{\
+                    result.add(strs[t]);\
+                    status[t]=1;\
+                    haveanagrams=1;\
+                \}\
+            \}\
+            if(haveanagrams==1)\{\
+                result.add(strs[i]);\
+            \}\
+        \}\
+        \
+        return result;\
+        \
+    \}\
+    public boolean isanagrams(String a,String b)\{\
+        char[] ca=a.toCharArray();\
+        char[] cb=b.toCharArray();\
+        if(ca.length!=cb.length) return false;\
+        ArrayList<Character> arlist1=new ArrayList<Character>();\
+        ArrayList<Character> arlist2=new ArrayList<Character>();\
+        for(char c:ca) arlist1.add(c);\
+        for(char d:cb) arlist2.add(d);\
+        Collections.sort(arlist1);\
+        Collections.sort(arlist2);\
+        for(int i=0;i<arlist1.size();i++)\{\
+            if(arlist1.get(i)!=arlist2.get(i))\{\
+                return false;\
+            \}\
+        \}\
+        return true;\
+        \
+    \}\
+\}}

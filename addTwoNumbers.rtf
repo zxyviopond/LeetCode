@@ -1,0 +1,166 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red0\green0\blue192;
+\red42\green0\blue255;\red63\green127\blue95;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.*;\
+\
+\pard\pardeftab720
+\cf3 /*************************************************************************\cf0 \
+\cf3  *  AddTwoNumbers \ul Leetcode\cf0 \ulnone \
+\cf3  * \cf0 \
+\cf3  *************************************************************************/\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  Sourcecode \{\
+	\
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 class\cf0  ListNode\{\
+    	\cf2 int\cf0  \cf4 val\cf0 ;\
+    	ListNode \cf4 next\cf0 ;\
+    	ListNode(\cf2 int\cf0  x)\{\
+    		\cf4 val\cf0 =x;\
+    		\cf4 next\cf0 =\cf2 null\cf0 ;\
+    	\}\
+    \}\
+	\
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] arg)\{\
+		Scanner scanner=\cf2 new\cf0  Scanner(System.\cf4 in\cf0 );\
+		String a1 = scanner.next();\
+		String a2 = scanner.next();\
+		\cf2 char\cf0 [] c1;\
+		\cf2 char\cf0 [] c2;\
+		\cf2 if\cf0 (a1.length()<a2.length())\{\
+			c1=a2.toCharArray();\
+			c2=a1.toCharArray();\
+		\}\
+		\cf2 else\cf0 \{\
+			c1=a1.toCharArray();\
+			c2=a2.toCharArray();\
+		\}\
+		ListNode[] listnodes=\cf2 new\cf0  ListNode[c1.\cf4 length\cf0 ];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=c1.\cf4 length\cf0 -1;i>=0;i--)\{\
+			listnodes[i]=\cf2 new\cf0  ListNode(c1[i]-\cf5 '0'\cf0 );\
+		\}\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<c1.\cf4 length\cf0 -1;i++)\{\
+			listnodes[i].\cf4 next\cf0 =listnodes[i+1];\
+		\}\
+		\
+		ListNode[] listnodes2=\cf2 new\cf0  ListNode[c2.\cf4 length\cf0 ];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=c2.\cf4 length\cf0 -1;i>=0;i--)\{\
+			listnodes2[i]=\cf2 new\cf0  ListNode(c2[i]-\cf5 '0'\cf0 );\
+		\}\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<c2.\cf4 length\cf0 -1;i++)\{\
+			listnodes2[i].\cf4 next\cf0 =listnodes2[i+1];\
+		\}\
+		ListNode resultlist=addtwoNumbers(listnodes[0],listnodes2[0]);\
+		ShowList(resultlist);\
+		\
+	\}\
+\
+\
+	\cf2 private\cf0  \cf2 static\cf0  \cf2 void\cf0  ShowList(ListNode resultlist) \{\
+		ListNode pr=resultlist;\
+		\cf2 while\cf0 (pr!=\cf2 null\cf0 )\{\
+			System.\cf4 out\cf0 .print(pr.\cf4 val\cf0 +\cf5 "->"\cf0 );\
+			pr=pr.\cf4 next\cf0 ;\
+		\}\
+		System.\cf4 out\cf0 .println();\
+		\
+	\}\
+\
+\
+	\cf2 public\cf0  \cf2 static\cf0  ListNode addtwoNumbers(ListNode a1, ListNode a2) \{\
+		ListNode p1=a1;\
+		ListNode p2=a2;\
+		ListNode pp1=a1;\
+		ListNode pp2=a2;\
+		\cf2 while\cf0 (pp1.\cf4 next\cf0 !=\cf2 null\cf0 &&pp2.\cf4 next\cf0 !=\cf2 null\cf0 )\{\
+			pp1=pp1.\cf4 next\cf0 ;\
+			pp2=pp2.\cf4 next\cf0 ;\
+		\}\
+		\
+		\cf2 while\cf0 (pp2.\cf4 next\cf0 ==\cf2 null\cf0 &&pp1.\cf4 next\cf0 !=\cf2 null\cf0 )\{\
+			ListNode nn=\cf2 new\cf0  ListNode(0);\
+			pp2.\cf4 next\cf0 =nn;\
+			pp2=pp2.\cf4 next\cf0 ;\
+			pp1=pp1.\cf4 next\cf0 ;\
+		\}\
+		\
+		\cf2 while\cf0 (pp1.\cf4 next\cf0 ==\cf2 null\cf0 &&pp2.\cf4 next\cf0 !=\cf2 null\cf0 )\{\
+			ListNode nn=\cf2 new\cf0  ListNode(0);\
+			pp1.\cf4 next\cf0 =nn;\
+			pp1=pp1.\cf4 next\cf0 ;\
+			pp2=pp2.\cf4 next\cf0 ;\
+		\}\
+			\
+		\cf2 int\cf0  flag=0;\
+		ListNode previous=\cf2 new\cf0  ListNode(-1);\
+		ListNode start=previous;\
+		\cf2 while\cf0 (p1!=\cf2 null\cf0 &&p2!=\cf2 null\cf0 )\{\
+			\cf2 int\cf0  sum=p1.\cf4 val\cf0 +p2.\cf4 val\cf0 +flag;\
+			\cf2 if\cf0 (sum>9)\{\
+				sum=sum-10;\
+				flag=1;\
+			\}\
+			\cf2 else\cf0 \{\
+				flag=0;\
+			\}\
+			ListNode n=\cf2 new\cf0  ListNode(sum);\
+			previous.\cf4 next\cf0 =n;\
+			previous=n;\
+			p1=p1.\cf4 next\cf0 ;\
+			p2=p2.\cf4 next\cf0 ;\
+		\}\
+		\cf2 if\cf0 (p1==\cf2 null\cf0 &&p2==\cf2 null\cf0 )\{\
+			\cf2 if\cf0 (flag==1)\{\
+				ListNode last=\cf2 new\cf0  ListNode(1);\
+				previous.\cf4 next\cf0 =last;\
+			\}\
+		\}\
+		\cf6 /*\cf0 \
+\pard\pardeftab720
+\cf6 		if(p1==null&&p2!=null)\{\cf0 \
+\cf6 			ListNode \ul pp\ulnone =p2;\cf0 \
+\cf6 			while(pp.next!=null)\{\cf0 \
+\cf6 			pp.val=pp.val+flag;\cf0 \
+\cf6 			 if(pp.val>9)\{\cf0 \
+\cf6 				pp.val=pp.val-10;\cf0 \
+\cf6 				flag=1;\cf0 \
+\cf6 			 \}\cf0 \
+\cf6 			\}\cf0 \
+\cf6 			if(flag==1)\{\cf0 \
+\cf6 				ListNode last=new ListNode(1);\cf0 \
+\cf6 				pp.next=last;\cf0 \
+\cf6 			\}\cf0 \
+\cf6 			previous.next=p2;\cf0 \
+\cf6 		\}\cf0 \
+\cf6 		if(p2==null&&p1!=null)\{\cf0 \
+\cf6 			ListNode \ul pp\ulnone =p1;\cf0 \
+\cf6 			while(pp.next!=null)\{\cf0 \
+\cf6 			pp.val=pp.val+flag;\cf0 \
+\cf6 			 if(pp.val>9)\{\cf0 \
+\cf6 				pp.val=pp.val-10;\cf0 \
+\cf6 				flag=1;\cf0 \
+\cf6 			 \}\cf0 \
+\cf6 			\}\cf0 \
+\cf6 			if(flag==1)\{\cf0 \
+\cf6 				ListNode last=new ListNode(1);\cf0 \
+\cf6 				pp.next=last;\cf0 \
+\cf6 			\}\cf0 \
+\cf6 			previous.next=p1;\cf0 \
+\cf6 			\cf0 \
+\cf6 		\}\cf0 \
+\cf6 		*/\cf0 \
+		\
+		\cf2 return\cf0  start.\cf4 next\cf0 ;\
+	\}\
+\
+	\
+	\
+	\
+	\
+	\
+\}}

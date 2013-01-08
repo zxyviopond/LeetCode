@@ -1,0 +1,90 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red127\green127\blue159;
+\red0\green0\blue192;\red42\green0\blue255;\red63\green127\blue95;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.*;\
+\
+\pard\pardeftab720
+\cf3 /*************************************************************************\cf0 \
+\cf3  *  Best Time to Buy and Sell Stock II \ul Leetcode\cf0 \ulnone \
+\cf3  *  Solve it by Dynamic Programming\cf0 \
+\cf3  *  \ul dp\ulnone (i)=max(\ul dp\ulnone (i\cf4 -\cf3 k)+FindBest(i\cf4 -\cf3 k+1,i))\cf0 \
+\cf3      k from 2 to i+1\cf0 \
+\cf3      \ul dp\ulnone (\cf4 -\cf3 1)=0;\cf0 \
+\cf3      \ul dp\ulnone (0)=0\cf0 \
+\cf3  *************************************************************************/\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  Sourcecode \{\
+	\
+   \
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] arg)\{\
+		Scanner scanner=\cf2 new\cf0  Scanner(System.\cf5 in\cf0 );\
+		\cf2 int\cf0  n=scanner.nextInt();\
+		\cf2 int\cf0 [] prices=\cf2 new\cf0  \cf2 int\cf0 [n];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<n;i++)\{\
+			prices[i]=scanner.nextInt();\
+		\}\
+		\cf2 int\cf0  result=maxProfit(prices);\
+		System.\cf5 out\cf0 .println(\cf6 "maxprofit:"\cf0 +result);\
+		\
+	\}\
+\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 int\cf0  maxProfit(\cf2 int\cf0 [] prices) \{\
+		\cf2 int\cf0 [] dpresult=\cf2 new\cf0  \cf2 int\cf0 [prices.\cf5 length\cf0 ];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<dpresult.\cf5 length\cf0 ;i++) dpresult[i]=-1;\cf7 //initialize\cf0 \
+		\cf2 for\cf0 (\cf2 int\cf0  i=1;i<dpresult.\cf5 length\cf0 ;i++)\{\
+		dp(i,prices,dpresult);\
+		\}\
+		\cf2 int\cf0  maxprofit=0;\
+		\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<dpresult.\cf5 length\cf0 ;i++)\{\
+			\cf2 int\cf0  tmp=dpresult[i];\
+			\cf2 if\cf0 (tmp>maxprofit) maxprofit=tmp;\
+			\cf7 //System.out.print(\ul dpresult\ulnone [i]+",");\cf0 \
+		\}\
+		\cf2 return\cf0  maxprofit;\
+	\}\
+	\
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 int\cf0  dp(\cf2 int\cf0  pos,\cf2 int\cf0 [] prices,\cf2 int\cf0 [] dpresult)\{\
+		\cf2 if\cf0 (pos==-1)\{\
+			\cf2 return\cf0  0;\
+		\}\
+		\cf2 if\cf0 (pos==0)\{\
+			dpresult[0]=0;\
+			\cf2 return\cf0  0;\
+		\}\
+		\cf2 if\cf0 (dpresult[pos]!=-1) \cf2 return\cf0  dpresult[pos];\
+		\cf2 int\cf0  max=-1;\
+		\cf2 for\cf0 (\cf2 int\cf0  k=2;k<pos+2;k++)\{\
+			\cf2 int\cf0  tmp=dp(pos-k,prices,dpresult)+FindBest(prices,pos-k+1,pos);\
+			\cf2 if\cf0 (tmp>max) max=tmp;\
+		\}\
+		dpresult[pos]=max;\
+		\cf2 return\cf0  max;\
+		\
+	\}\
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 int\cf0  FindBest(\cf2 int\cf0 [] prices,\cf2 int\cf0  start,\cf2 int\cf0  finalsell)\{\
+		\cf2 int\cf0  \ul n\ulnone =prices.\cf5 length\cf0 ;\
+		\cf2 int\cf0  max=0;\
+		\cf2 for\cf0 (\cf2 int\cf0  i=start;i<finalsell;i++)\{\
+			\cf2 int\cf0  tmp=prices[finalsell]-prices[i];\
+			\cf2 if\cf0 (tmp>max) max=tmp;\
+		\}\
+		\cf2 return\cf0  max;\
+	\}\
+\
+\
+\
+	\
+	\
+	\
+	\
+	\
+\}}
