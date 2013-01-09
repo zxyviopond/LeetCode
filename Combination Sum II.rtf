@@ -1,0 +1,108 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red0\green0\blue192;
+}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.*;\
+\
+\pard\pardeftab720
+\cf3 /*************************************************************************\cf0 \
+\cf3  *  Combination Sum II \ul Leetcode\cf0 \ulnone \
+\cf3  *************************************************************************/\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  Sourcecode \{\
+	\
+   \
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] arg)\{\
+		\
+		Scanner scanner=\cf2 new\cf0  Scanner(System.\cf4 in\cf0 );\
+		\cf2 int\cf0  n=scanner.nextInt();\
+	\
+		\cf2 int\cf0 [] prices=\cf2 new\cf0  \cf2 int\cf0 [n];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<n;i++)\{\
+			prices[i]=scanner.nextInt();\
+		\}\
+		\cf2 int\cf0  target=scanner.nextInt();\
+		ArrayList<ArrayList<Integer>> a = combinationSum(prices,target);\
+	\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<a.size();i++)\{\
+			System.\cf4 out\cf0 .println(a.get(i).toString());\
+		\}\
+	\}\
+\
+	\cf2 private\cf0  \cf2 static\cf0  ArrayList<ArrayList<Integer>> combinationSum(\cf2 int\cf0 [] can,\
+			\cf2 int\cf0  target) \{\
+		ArrayList<ArrayList<Integer>> a = combination(can.\cf4 length\cf0 ,can,target);\
+		ArrayList<ArrayList<Integer>> b = \cf2 new\cf0  ArrayList<ArrayList<Integer>>();\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<a.size();i++)\{\
+			\cf2 if\cf0 (!in(a.get(i),b))\{\
+				b.add(a.get(i));\
+			\}\
+		\}\
+		\cf2 return\cf0  b;\
+	\}\
+	\
+	\cf2 private\cf0  \cf2 static\cf0  \cf2 boolean\cf0  in(ArrayList<Integer> arrayList,\
+			ArrayList<ArrayList<Integer>> b) \{\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<b.size();i++)\{\
+			\cf2 if\cf0 (thesame(arrayList,b.get(i)))\{\
+				\cf2 return\cf0  \cf2 true\cf0 ;\
+			\}\
+		\}\
+		\cf2 return\cf0  \cf2 false\cf0 ;\
+	\}\
+\
+	\cf2 private\cf0  \cf2 static\cf0  \cf2 boolean\cf0  thesame(ArrayList<Integer> arrayList,\
+			ArrayList<Integer> arrayList2) \{\
+		\cf2 if\cf0 (arrayList.size()!=arrayList2.size()) \cf2 return\cf0  \cf2 false\cf0 ;\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<arrayList.size();i++)\{\
+			\cf2 if\cf0 (arrayList.get(i)!=arrayList2.get(i)) \cf2 return\cf0  \cf2 false\cf0 ;\
+		\}\
+		\cf2 return\cf0  \cf2 true\cf0 ;\
+	\}\
+\
+	\cf2 public\cf0  \cf2 static\cf0  ArrayList<ArrayList<Integer>> combination(\cf2 int\cf0  n,\cf2 int\cf0 [] cand,\cf2 int\cf0  target)\{\
+		ArrayList<ArrayList<Integer>> a = \cf2 new\cf0  ArrayList<ArrayList<Integer>>();\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<(1<<n);i++)\{\
+			ArrayList<Integer> ar=printsub(n,i,cand);\
+			\cf2 int\cf0  sum=0;\
+			\cf2 for\cf0 (\cf2 int\cf0  j=0;j<ar.size();j++)\{\
+				sum+=ar.get(j);\
+			\}\
+			\cf2 if\cf0 (sum==target)\{\
+				Collections.sort(ar);\
+				a.add(ar);\
+			\}\
+		\}\
+		\cf2 return\cf0  a;\
+	\}\
+\
+	\cf2 private\cf0  \cf2 static\cf0  ArrayList<Integer> printsub(\cf2 int\cf0  n, \cf2 int\cf0  s,\cf2 int\cf0 [] cand) \{\
+		ArrayList<Integer> t = \cf2 new\cf0  ArrayList<Integer>();\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<n;i++)\{\
+			\cf2 int\cf0  result=s&1<<i;\
+			\cf2 if\cf0 (result>0)\{\
+				t.add(cand[i]);\
+			\}\
+		\}\
+		\cf2 return\cf0  t;\
+		\
+		\
+	\}\
+	\
+	\
+\
+	\
+\
+\
+\
+	\
+	\
+	\
+	\
+	\
+\}}
