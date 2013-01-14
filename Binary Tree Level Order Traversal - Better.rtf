@@ -43,13 +43,7 @@ public class Solution \{\
     \}\
     //Better - Get Distance while DFS\
 \
-    public int Distance2Root(TreeNode node,TreeNode root)\{\
-     if(root == null) return 1000000;\
-     if(node == root) return 0;\
-     int dist = Math.min(Distance2Root(node,root.left),Distance2Root(node,root.right));\
-     return dist+1;\
-     \
-    \}\
+   \
     \
     public int Depth(TreeNode root)\{\
         if(root == null) return 0;\
