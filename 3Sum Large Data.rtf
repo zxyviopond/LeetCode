@@ -1,0 +1,119 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red0\green0\blue192;
+\red63\green127\blue95;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.*;\
+\
+\pard\pardeftab720
+\cf3 /*************************************************************************\cf0 \
+\cf3  *   \ul Leetcode\ulnone  Decode Ways\cf0 \
+\cf3  *************************************************************************/\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  Sourcecode \{\
+	\
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 class\cf0  ResultObject\{\
+    	\cf2 public\cf0  ArrayList<Integer> \cf4 a\cf0 ;\
+    	\cf2 public\cf0  \cf2 int\cf0  hashCode()\{\
+    		\cf2 return\cf0  \cf4 a\cf0 .get(0)*1024+\cf4 a\cf0 .get(1)*1+\cf4 a\cf0 .get(2);\
+    	\}\
+    	ResultObject(ArrayList<Integer> x)\{\
+    		\cf4 a\cf0 =\cf2 new\cf0  ArrayList<Integer>();\
+    		\cf4 a\cf0 .add(x.get(0));\
+    		\cf4 a\cf0 .add(x.get(1));\
+    		\cf4 a\cf0 .add(x.get(2));\
+    	\}\
+    	\
+    	\cf2 public\cf0  \cf2 boolean\cf0  equals(Object o)\{    \
+            \cf2 return\cf0  (o \cf2 instanceof\cf0  ResultObject) && thesame(\cf2 this\cf0 .\cf4 a\cf0 ,((ResultObject)o).\cf4 a\cf0 );    \
+       \}\
+		\cf2 private\cf0  \cf2 boolean\cf0  thesame(ArrayList<Integer> a2, ArrayList<Integer> a3) \{\
+			\cf2 if\cf0 (a2.size()!=a3.size()) \cf2 return\cf0  \cf2 false\cf0 ;\
+			\cf2 for\cf0 (\cf2 int\cf0  i=0;i<a2.size();i++)\{\
+				\cf2 if\cf0 (a2.get(i)!=a3.get(i)) \cf2 return\cf0  \cf2 false\cf0 ;\
+			\}\
+			\cf2 return\cf0  \cf2 true\cf0 ;\
+		\}   \
+    \}\
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] arg)\{\
+		Scanner input=\cf2 new\cf0  Scanner(System.\cf4 in\cf0 );\
+		\cf2 int\cf0  n=input.nextInt();\
+		\cf2 int\cf0 [] a = \cf2 new\cf0  \cf2 int\cf0 [n];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<n;i++)\{\
+			a[i]=input.nextInt();\
+		\}\
+		ArrayList<ArrayList<Integer>> result=threeSum(a);\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<result.size();i++)\{\
+			System.\cf4 out\cf0 .println(result.get(i).toString());\
+		\}\
+	\}\
+\
+	\cf2 public\cf0  \cf2 static\cf0  ArrayList<ArrayList<Integer>> threeSum(\cf2 int\cf0 [] a) \{\
+		ArrayList<Integer> alist=\cf2 new\cf0  ArrayList<Integer>();\
+		\cf2 int\cf0  length=a.\cf4 length\cf0 ;\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<length;i++)\{\
+			alist.add(a[i]);\
+		\}\
+		Collections.sort(alist); \cf5 //O(\ul nlogn\ulnone )\cf0 \
+		\
+		HashSet<ResultObject> hashset=\cf2 new\cf0  HashSet<ResultObject>();\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<alist.size();i++)\{\
+			findpartner(alist,i,-alist.get(i),hashset);\
+		\}\
+		Iterator<ResultObject> iter=hashset.iterator();\
+		ArrayList<ArrayList<Integer>> result=\cf2 new\cf0  ArrayList<ArrayList<Integer>>();\
+		\cf2 while\cf0 (iter.hasNext())\{\
+			result.add(iter.next().\cf4 a\cf0 );\
+		\}\
+		\cf2 return\cf0  result;\
+	\}\
+	\
+	\cf2 private\cf0  \cf2 static\cf0  ArrayList<ArrayList<Integer>> findpartner(ArrayList<Integer> alist,\
+			\cf2 int\cf0  ignorepos, \cf2 int\cf0  sumvalue,HashSet<ResultObject> hash) \{\
+	\
+		\
+		ArrayList<ArrayList<Integer>> result = \cf2 new\cf0  ArrayList<ArrayList<Integer>>();\
+		\cf2 int\cf0  leftindex=ignorepos+1;\
+		\cf2 int\cf0  rightindex=alist.size()-1;\
+		\
+		\cf2 while\cf0 (leftindex<rightindex)\{\
+		\cf2 int\cf0  p1=alist.get(leftindex);\
+		\cf2 int\cf0  p2=alist.get(rightindex);\
+		\cf2 if\cf0 (p1+p2>sumvalue)\{\
+			rightindex--;\
+		\}\
+		\cf2 if\cf0 (p1+p2<sumvalue)\{\
+			leftindex++;\
+		\}\
+		\cf2 if\cf0 (p1+p2==sumvalue)\{\
+			\cf5 //System.out.println(alist.get(\ul ignorepos\ulnone )+"find!");\cf0 \
+			ArrayList<Integer> solution = \cf2 new\cf0  ArrayList<Integer>();\
+			solution.add(alist.get(ignorepos));\
+			solution.add(p1);\
+			solution.add(p2);\
+			\cf5 //System.out.println(solution+"added");\cf0 \
+			Collections.sort(solution);\
+			ResultObject resultobject=\cf2 new\cf0  ResultObject(solution);\
+			\cf2 if\cf0 (!hash.contains(resultobject)) hash.add(resultobject);\
+			leftindex++;\
+			rightindex--;\
+		 \}\
+		\}\
+		\
+		\cf2 return\cf0  result;\
+	\}\
+\
+	\
+	\
+	\
+\}
+\f1\fs24 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
+\
+\
+}

@@ -1,0 +1,126 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red0\green0\blue192;
+\red63\green127\blue95;\red42\green0\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.*;\
+\
+\pard\pardeftab720
+\cf3 /*************************************************************************\cf0 \
+\cf3  *   \ul Leetcode\ulnone  Insert Intervals\cf0 \
+\cf3  *************************************************************************/\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  Sourcecode \{\
+	\
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 class\cf0  Interval\{\
+    	\cf2 int\cf0  \cf4 start\cf0 ;\
+    	\cf2 int\cf0  \cf4 end\cf0 ;\
+    	Interval()\{\
+    		\cf4 start\cf0 =0;\
+    		\cf4 end\cf0 =0;\
+    	\}\
+    	Interval(\cf2 int\cf0  s,\cf2 int\cf0  e)\{\
+    		\cf4 start\cf0 =s;\
+    		\cf4 end\cf0 =e;\
+    	\}\
+    \}\
+\
+	\
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 boolean\cf0  HaveOverlap(Interval I1,Interval I2)\{\
+    	\cf2 if\cf0 (I1.\cf4 end\cf0 <I2.\cf4 start\cf0 ) \cf2 return\cf0  \cf2 false\cf0 ;\
+    	\cf2 if\cf0 (I1.\cf4 start\cf0 >I2.\cf4 end\cf0 ) \cf2 return\cf0  \cf2 false\cf0 ;\
+    	\cf2 if\cf0 (I2.\cf4 end\cf0 <I1.\cf4 start\cf0 ) \cf2 return\cf0  \cf2 false\cf0 ;\
+    	\cf2 if\cf0 (I2.\cf4 start\cf0 >I1.\cf4 end\cf0 ) \cf2 return\cf0  \cf2 false\cf0 ;\
+    	\cf2 return\cf0  \cf2 true\cf0 ;\
+    \}\
+    \
+    \cf2 public\cf0  \cf2 static\cf0  Interval Merge(Interval Subject,Interval Object)\{\
+    	Interval result=\cf2 new\cf0  Interval();\
+    	result.\cf4 start\cf0 =Math.min(Subject.\cf4 start\cf0 , Object.\cf4 start\cf0 );\
+    	result.\cf4 end\cf0 =Math.max(Subject.\cf4 end\cf0 , Object.\cf4 end\cf0 );\
+    	\cf2 return\cf0  result;\
+    \}\
+	\
+    \cf2 public\cf0  \cf2 static\cf0  ArrayList<Interval> insert(ArrayList<Interval> intervals, Interval newInterval) \{\
+    	\cf2 if\cf0 (intervals.size()==0)\{\
+    		intervals.add(newInterval);\
+    		\cf2 return\cf0  intervals;\
+    	\}\
+    	\cf2 int\cf0  previousindex=-1;\
+    	\cf2 for\cf0 (\cf2 int\cf0  i=0;i<intervals.size();i++)\{\
+    		\cf2 if\cf0 (HaveOverlap(intervals.get(i),newInterval))\{\
+    			Interval MergedInterval=Merge(intervals.get(i),newInterval);\
+    			\cf2 if\cf0 (MergedInterval.\cf4 start\cf0 !=newInterval.\cf4 start\cf0 ||MergedInterval.\cf4 end\cf0 !=newInterval.\cf4 end\cf0 )\{\cf5 //If Merged change\cf0 \
+    			intervals.remove(i);\
+    			intervals.add(i, MergedInterval);\cf5 //Replace the \ul pos\cf0 \ulnone \
+    			\cf2 if\cf0 (previousindex!=-1) \{intervals.remove(previousindex);i--;\}\cf5 //Remove the old place where the interval sets\cf0 \
+    			newInterval=MergedInterval;\cf5 //Mark the current newInterval to merge\cf0 \
+    			previousindex=i;\cf5 //Mark  this position as current merged result\cf0 \
+    			\}\
+    			\cf2 else\cf0 \{\cf5 //If no changes on the newInterval to merge (the item is inside the interval)\cf0 \
+    				\
+    				\cf2 if\cf0 (i==intervals.size()-1)\{\
+    					intervals.remove(i);\
+    					intervals.add(i,MergedInterval);\
+    					\cf2 if\cf0 (previousindex!=-1) intervals.remove(previousindex);\
+    					\cf2 return\cf0  intervals;\
+    				\}\
+    				intervals.remove(i); \cf5 //remove it\cf0 \
+    				i--;\
+    			\}\
+    		\}\
+    		\cf2 else\cf0 \{\
+    			\
+    			\
+    			\
+    			\cf2 if\cf0 (newInterval.\cf4 end\cf0 <intervals.get(i).\cf4 start\cf0 )\{\
+    				\
+    				\cf2 if\cf0 (previousindex!=-1) \{\
+    					\
+    				\}\
+    				\cf2 else\cf0 \{\
+    					intervals.add(i,newInterval);\
+    					previousindex=i;\
+    				\}\
+    				i++;\
+    			\}\
+    			\cf2 if\cf0 (i==intervals.size()-1&&previousindex==-1)\{\
+					intervals.add(newInterval);\
+					\cf2 if\cf0 (previousindex!=-1) intervals.remove(previousindex);\
+					\cf2 return\cf0  intervals;\
+				\}\
+    		\}\
+    		\
+    		\
+    	\}\
+    \
+        \cf2 return\cf0  intervals;\
+    \}\
+    \
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] arg)\{\
+		Scanner input=\cf2 new\cf0  Scanner(System.\cf4 in\cf0 );\
+		\cf2 int\cf0  n = input.nextInt();\
+		ArrayList<Interval> ar=\cf2 new\cf0  ArrayList<Interval>();\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<n;i++)\{\
+			\cf2 int\cf0  start=input.nextInt();\
+			\cf2 int\cf0  end=input.nextInt();\
+			ar.add(\cf2 new\cf0  Interval(start,end));\
+		\}\
+		\cf2 int\cf0  start=input.nextInt();\
+		\cf2 int\cf0  end=input.nextInt();\
+		Interval interval=\cf2 new\cf0  Interval(start,end);\
+		ArrayList<Interval> result=insert(ar, interval);\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<result.size();i++)\{\
+			System.\cf4 out\cf0 .print(\cf6 "["\cf0 +result.get(i).\cf4 start\cf0 +\cf6 ","\cf0 +result.get(i).\cf4 end\cf0 +\cf6 "]"\cf0 );\
+		\}\
+		\
+		\
+	\}\
+	\
+	\
+\
+	 \
+\}}
