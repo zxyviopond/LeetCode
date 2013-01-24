@@ -1,0 +1,67 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 public class Solution \{\
+    public static int[] sortColors(int[] a) \{\
+    	int firstone=-1;\
+		for(int i=0;i<a.length;i++)\{\
+			if(a[i]==1) \{firstone=i;\
+			break;\
+			\}\
+		\}\
+		if(firstone==-1)\{//Do not have 1\
+			TwoSort(0,a.length-1,0,2,a);\
+			//Sort 0 and 2\
+		\}\
+		else\{\
+			//System.out.println("here!");\
+			int pos=Partition(a,0,a.length-1,firstone);\
+			TwoSort(0,pos-1,0,1,a);\
+			TwoSort(pos,a.length-1,1,2,a);\
+		\}\
+		return a;\
+	\}\
+\
+	public static int Partition(int arr[], int left, int right,int firstone)\
+	\{\
+	      int i = left, j = right;\
+	      int tmp;\
+	      int pivot = arr[firstone];\
+	     \
+	      while (i <= j) \{\
+	            while (arr[i] < pivot)\
+	                  i++;\
+	            while (arr[j] > pivot)\
+	                  j--;\
+	            if (i <= j) \{\
+	                  tmp = arr[i];\
+	                  arr[i] = arr[j];\
+	                  arr[j] = tmp;\
+	                  i++;\
+	                  j--;\
+	            \}\
+	      \};\
+	     \
+	      return i;\
+	\}\
+\
+	private static void TwoSort(int startpos,int endpos,int valueone, int valuetwo, int[] a) \{\
+		int left=startpos;\
+		int right=endpos;\
+		while(left<=right)\{\
+			while(left<=endpos&&a[left]==valueone) left++;\
+			while(right>=startpos&&a[right]==valuetwo) right--;\
+			if(left<=right)\{\
+				int tmp=a[left];\
+				a[left]=a[right];\
+				a[right]=tmp;\
+			\}\
+			\
+		\}\
+		\
+	\}\
+\
+\}}

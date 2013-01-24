@@ -1,0 +1,52 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 /**\
+ * Definition for binary tree\
+ * public class TreeNode \{\
+ *     int val;\
+ *     TreeNode left;\
+ *     TreeNode right;\
+ *     TreeNode(int x) \{ val = x; \}\
+ * \}\
+ */\
+public class Solution \{\
+    public static ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) \{\
+        ArrayList<ArrayList<Integer>> ar = new ArrayList<ArrayList<Integer>>();\
+        ArrayList<Integer> combo = new ArrayList<Integer>();\
+        dfs(root,sum,ar,combo);\
+        return ar; \
+    \}\
+    \
+    public static boolean dfs(TreeNode root,int sum,ArrayList<ArrayList<Integer>> ar,ArrayList<Integer> combo)\{\
+        if(root==null) return false;\
+        if(root.left==null&&root.right==null)\{\
+            combo.add(root.val);\
+            int asum=0;\
+            for(int i=0;i<combo.size();i++)\{\
+                asum+=combo.get(i);\
+            \}\
+            if(asum==sum)\{\
+                ArrayList<Integer> solution = new ArrayList<Integer>();\
+                for(int i=0;i<combo.size();i++)\{\
+                    solution.add(combo.get(i));\
+                \}\
+                ar.add(solution);\
+                combo.remove(combo.size()-1);\
+                return true;\
+            \}\
+            combo.remove(combo.size()-1);\
+            return false;\
+\
+        \}\
+        combo.add(root.val);\
+        boolean left=dfs(root.left,sum,ar,combo);\
+        boolean right=dfs(root.right,sum,ar,combo);\
+        combo.remove(combo.size()-1);\
+        if(left||right) return true;\
+        return false;\
+    \}\
+\}}

@@ -1,0 +1,115 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red127\green0\blue85;\red63\green95\blue191;\red0\green0\blue192;
+\red42\green0\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 import\cf0  java.util.*;\
+\
+\pard\pardeftab720
+\cf3 /*************************************************************************\cf0 \
+\cf3  *   \ul Leetcode\ulnone  \ul Soduko\cf0 \ulnone \
+\cf3  *************************************************************************/\cf0 \
+\pard\pardeftab720
+\cf2 public\cf0  \cf2 class\cf0  Sourcecode \{\
+	\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  main(String[] arg)\{\
+		Scanner input=\cf2 new\cf0  Scanner(System.\cf4 in\cf0 );\
+		\cf2 int\cf0  n = input.nextInt();\
+		\cf2 char\cf0 [][] board = \cf2 new\cf0  \cf2 char\cf0 [n][n];\
+		\cf2 for\cf0 (\cf2 int\cf0  i=0;i<n;i++)\{\
+				board[i]=input.next().toCharArray();\
+		\}\
+		solveSudoku(board);\
+		\
+	\}\
+\
+	\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  solveSudoku(\cf2 char\cf0 [][] board) \{\
+        \cf2 char\cf0 [][] tryboard = \cf2 new\cf0  \cf2 char\cf0 [board.\cf4 length\cf0 ][board[0].\cf4 length\cf0 ];\
+        \cf2 for\cf0 (\cf2 int\cf0  i=0;i<board.\cf4 length\cf0 ;i++)\{\
+            \cf2 for\cf0 (\cf2 int\cf0  j=0;j<board[0].\cf4 length\cf0 ;j++)\{\
+                tryboard[i][j]=board[i][j];\
+            \}\
+        \}\
+        \cf2 char\cf0 [][] result = \cf2 new\cf0  \cf2 char\cf0 [board.\cf4 length\cf0 ][board[0].\cf4 length\cf0 ];\
+        \
+       dfs(0,0,tryboard,result);\
+        \
+       \cf2 for\cf0 (\cf2 int\cf0  i=0;i<result.\cf4 length\cf0 ;i++)\{\
+    	   System.\cf4 out\cf0 .println(result[i]);\
+       \}\
+\
+    \}\
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  dfs(\cf2 int\cf0  i,\cf2 int\cf0  j, \cf2 char\cf0 [][] tryboard,\cf2 char\cf0 [][] result)\{\
+        \cf2 if\cf0 (j>=tryboard[0].\cf4 length\cf0 )\{\
+            j=0;i=i+1;\
+        \}\
+        \cf2 if\cf0 (i>=tryboard.\cf4 length\cf0 )\{\
+            \
+             \cf2 for\cf0 (\cf2 int\cf0  w=0;w<tryboard.\cf4 length\cf0 ;w++)\{\
+                 \cf2 for\cf0 (\cf2 int\cf0  k=0;k<tryboard[0].\cf4 length\cf0 ;k++)\{\
+                	\
+                     result[w][k]=tryboard[w][k];\
+                 \}\
+              \
+             \}\
+          \
+             \cf2 return\cf0 ;\
+        \}\
+        \cf2 if\cf0 (tryboard[i][j]==\cf5 '.'\cf0 )\{\
+            \cf2 for\cf0 (\cf2 int\cf0  k=1;k<=9;k++)\{\
+                tryboard[i][j]=String.valueOf(k).toCharArray()[0];\
+                \cf2 if\cf0 (isok(tryboard,i,j))\{\
+                    dfs(i,j+1,tryboard,result);\
+                    tryboard[i][j]=\cf5 '.'\cf0 ;\
+                \}\
+                \cf2 else\cf0 \{\
+                	tryboard[i][j]=\cf5 '.'\cf0 ;\
+                \}\
+                \
+            \}\
+            \cf2 return\cf0 ;\
+        \}\
+        \cf2 else\cf0 \{\
+            dfs(i,j+1,tryboard,result);\
+            \cf2 return\cf0 ;\
+        \}\
+       \
+    \}\
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 boolean\cf0  isok(\cf2 char\cf0 [][] tryboard,\cf2 int\cf0  i,\cf2 int\cf0  j)\{\
+        \cf2 char\cf0  currentchar = tryboard[i][j];\
+        \cf2 for\cf0 (\cf2 int\cf0  w=0;w<tryboard.\cf4 length\cf0 ;w++)\{\
+            \cf2 if\cf0 (w==i) \cf2 continue\cf0 ;\
+            \cf2 if\cf0 (tryboard[w][j]==currentchar) \cf2 return\cf0  \cf2 false\cf0 ;\
+        \}\
+        \cf2 for\cf0 (\cf2 int\cf0  k=0;k<tryboard[0].\cf4 length\cf0 ;k++)\{\
+            \cf2 if\cf0 (k==j) \cf2 continue\cf0 ;\
+            \cf2 if\cf0 (tryboard[i][k]==currentchar) \cf2 return\cf0  \cf2 false\cf0 ;\
+        \}\
+        \cf2 if\cf0 (!nineok(tryboard,i,j)) \cf2 return\cf0  \cf2 false\cf0 ;\
+        \cf2 return\cf0  \cf2 true\cf0 ;\
+    \}\
+    \
+    \cf2 public\cf0  \cf2 static\cf0  \cf2 boolean\cf0  nineok(\cf2 char\cf0 [][] tryboard,\cf2 int\cf0  i,\cf2 int\cf0  j)\{\
+        \cf2 int\cf0  vertical = i/3;\
+        \cf2 int\cf0  horizonal=j/3;\
+        \cf2 int\cf0  verticalstart=vertical*3;\
+        \cf2 int\cf0  horizonalstart=horizonal*3;\
+        \cf2 for\cf0 (\cf2 int\cf0  w=verticalstart;w<verticalstart+3;w++)\{\
+            \cf2 for\cf0 (\cf2 int\cf0  k=horizonalstart;k<horizonalstart+3;k++)\{\
+                \cf2 if\cf0 (w==i&&k==j) \cf2 continue\cf0 ;\
+                \cf2 if\cf0 (tryboard[w][k]==tryboard[i][j]) \cf2 return\cf0  \cf2 false\cf0 ;\
+            \}\
+        \}\
+        \cf2 return\cf0  \cf2 true\cf0 ;\
+    \}\
+	\
+\
+	\
+	\
+	\
+\
+	 \
+\}}
