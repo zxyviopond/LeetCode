@@ -1,0 +1,43 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 public class Solution \{\
+    public boolean searchMatrix(int[][] matrix, int target) \{\
+        if(target<matrix[0][0]) return false;\
+         int rowindex=bsearchrow(0,matrix.length-1,matrix,target);\
+        if(rowindex<matrix.length&&matrix[rowindex][0]==target) return true;\
+        rowindex--;\
+        return binarysearchrow(rowindex,0,matrix[0].length-1,matrix,target);\
+        \
+    \}\
+    public int bsearchrow(int left,int right,int[][] A, int target)\{\
+        while(left<=right)\{\
+            int middle=(left+right)/2;\
+            if(target<=A[middle][0])\{\
+                right=middle-1;\
+            \}\
+            else\{\
+                left=middle+1;\
+            \}\
+        \}\
+        return left;\
+    \}\
+    \
+    public boolean binarysearchrow(int rowindex,int left,int right,int[][] A,int target)\{\
+        while(left<=right)\{\
+            int middle=(left+right)/2;\
+            if(A[rowindex][middle]==target) return true;\
+            if(target<A[rowindex][middle])\{\
+               right=middle-1;\
+            \}\
+            else\{\
+               left=middle+1;\
+            \}\
+        \}\
+        \
+        return false;\
+    \}\
+\}}

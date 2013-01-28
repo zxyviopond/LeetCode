@@ -1,0 +1,92 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf0 public class Solution \{\
+   public static boolean exist(char[][] board, String word) \{\
+        int m = board.length;\
+        int n = board[0].length;\
+        int[][] vis = new int[m][n];\
+        for(int i=0;i<m;i++)\{\
+            for(int j=0;j<n;j++)\{\
+                vis[i][j]=0;\
+            \}\
+        \}\
+        \
+        boolean[] found=new boolean[1];\
+        ArrayList<Character> dfsresult = new ArrayList<Character>();\
+            for(int i=0;i<m;i++)\{\
+                for(int j=0;j<n;j++)\{\
+            		if(found[0]!=true)\{\
+            			dfs(i,j,board,vis,dfsresult,m,n,word,found);\
+            		\}\
+            		\
+            	\}\
+            \}\
+        		\
+        \
+        return found[0];\
+        \
+        \
+    \}\
+    \
+    public static void dfs(int i,int j,char[][] board, int[][] vis,ArrayList<Character> dfsresult,int m,int n,String word,boolean[] found)\{\
+    	if(found[0]==true) return;\
+    	if(dfsresult.size()>=word.length()) return;\
+    	if(i<0||j<0||i>=m||j>=n)\{\
+    		return;\
+        	\
+        \}\
+        if(vis[i][j]==1) return;\
+        \
+        char current=board[i][j];\
+        vis[i][j]=1;\
+        dfsresult.add(current);\
+        \
+        //Check OK\
+        StringBuffer ss=new StringBuffer();\
+    	for(Character ch:dfsresult) ss.append(ch);\
+    	String s=ss.toString();\
+    	StringBuffer reverseword=new StringBuffer();\
+    	for(int w=0;w<word.length();w++)\{\
+    		reverseword.append(word.charAt(word.length()-1-w));\
+    	\}\
+    	String reversew=reverseword.toString();\
+    	if(s.contains(reversew)||s.contains(word))\{\
+    		//System.out.println(s);\
+    		found[0]=true;\
+    		return;\
+    	\}\
+        \
+        \
+        dfs(i+1,j,board,vis,dfsresult,m,n,word,found);\
+        dfs(i-1,j,board,vis,dfsresult,m,n,word,found);\
+        dfs(i,j-1,board,vis,dfsresult,m,n,word,found);\
+        dfs(i,j+1,board,vis,dfsresult,m,n,word,found);\
+        vis[i][j]=0;\
+        dfsresult.remove(dfsresult.size()-1);\
+        \
+    \}\
+ \
+\}\
+/*\
+TESTCASE:\
+3 4\
+ABCE\
+SFCS\
+ADEE\
+\
+\
+7 7\
+FYCENRD\
+KLNFINU\
+AAARAHR\
+NDKLPNE\
+ALANSAP\
+OOGOTPN\
+HPOLANO\
+*/\
+}

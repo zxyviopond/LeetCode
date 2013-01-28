@@ -1,0 +1,69 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf320
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 public class Solution \{\
+    public boolean isValidSudoku(char[][] board) \{\
+        int m = board.length;\
+        for(int i=0;i<m;i++)\{\
+            if(!hangok(i,board,m)) return false;\
+        \}\
+        \
+        for(int j=0;j<m;j++)\{\
+            if(!lieok(j,board,m)) return false;\
+        \}\
+        for(int k=0;k<m/3;k++)\{\
+            for(int w=0;w<m/3;w++)\{\
+            if(!blockok(k,w,board,m)) return false;\
+            \}\
+        \}\
+        \
+        return true;\
+    \}\
+    public boolean blockok(int blockrow,int blockcol,char[][] board,int n)\{\
+        int rowstart=3*blockrow;\
+        int rowend=3*blockrow+2;\
+        int colstart=3*blockcol;\
+        int colend=3*blockcol+2;\
+        ArrayList<Character> array = new ArrayList<Character>();\
+        for(int i=rowstart;i<=rowend;i++)\{\
+            for(int j=colstart;j<=colend;j++)\{\
+                if(board[i][j]!='.')\
+                array.add(board[i][j]);\
+            \}\
+        \}\
+        Collections.sort(array);\
+        for(int i=1;i<array.size();i++)\{\
+            if(array.get(i).equals(array.get(i-1))) return false;\
+        \}\
+        return true;\
+    \}\
+    \
+    public boolean hangok(int rowindex,char[][] board,int n)\{\
+        ArrayList<Character> array = new ArrayList<Character>();\
+        for(int i=0;i<n;i++)\{\
+            if(board[rowindex][i]!='.')\
+            array.add(board[rowindex][i]);\
+        \}\
+        Collections.sort(array);\
+        for(int i=1;i<array.size();i++)\{\
+            if(array.get(i).equals(array.get(i-1))) return false;\
+        \}\
+        return true;\
+    \}\
+    \
+    public boolean lieok(int lieindex,char[][] board,int n)\{\
+        ArrayList<Character> array = new ArrayList<Character>();\
+        for(int i=0;i<n;i++)\{\
+            if(board[i][lieindex]!='.')\
+            array.add(board[i][lieindex]);\
+        \}\
+        Collections.sort(array);\
+        for(int i=1;i<array.size();i++)\{\
+            if(array.get(i).equals(array.get(i-1))) return false;\
+        \}\
+        return true;\
+    \}\
+\}}
